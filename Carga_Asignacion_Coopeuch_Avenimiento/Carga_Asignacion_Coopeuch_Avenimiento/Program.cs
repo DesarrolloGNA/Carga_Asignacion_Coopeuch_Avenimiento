@@ -96,7 +96,7 @@ namespace Carga_Asignacion_Coopeuch_Avenimiento
 
         private static void Leer_Excel(string ruta)
         {
-            int contador = 0;
+            int contador = 1;
             string Campo = "";
             DateTime Fecha_Actual = DateTime.Now;
             /*--------------------------------------------------------------------------------*/
@@ -104,6 +104,7 @@ namespace Carga_Asignacion_Coopeuch_Avenimiento
             /*--------------------------------------------------------------------------------*/
             try
             {
+
                 using (var stream = File.Open(ruta, FileMode.Open, FileAccess.Read))
                 {
                     using (var reader = ExcelReaderFactory.CreateReader(stream, new ExcelReaderConfiguration()
