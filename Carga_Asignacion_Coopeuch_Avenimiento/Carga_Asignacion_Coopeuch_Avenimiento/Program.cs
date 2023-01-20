@@ -14,39 +14,42 @@ namespace Carga_Asignacion_Coopeuch_Avenimiento
         public static List<Asignacion_Coopeuch_Avenimiento> Lista_Asignacion_Coopeuch_Avenimientos = new List<Asignacion_Coopeuch_Avenimiento>();
         static void Main(string[] args)
         {
-
-            /*-------------------------------------------------------------------------*/
-            /*                             RUTA DEL ARCHIVO                            */
-            /*-------------------------------------------------------------------------*/
-            DirectoryInfo di = new DirectoryInfo(@"C:\coopeuch\asignacion\");
-            FileInfo[] files = di.GetFiles("*");
-
-            foreach (FileInfo file in files)
+            try
             {
-                if (file.Name.Contains("Base_Avenimientos"))
+
+                /*-------------------------------------------------------------------------*/
+                /*                             RUTA DEL ARCHIVO                            */
+                /*-------------------------------------------------------------------------*/
+                DirectoryInfo di = new DirectoryInfo(@"C:\coopeuch\avenimientos\");
+                FileInfo[] files = di.GetFiles("*");
+
+                foreach (FileInfo file in files)
                 {
-                    String Ruta_Archivo = @"C:\coopeuch\asignacion\" + file.Name;
-                    Console.WriteLine("Lectura del Archivo: " + file.Name.ToString());
-                    /*-------------------------------------------------------------------------*/
-                    /*                    llamado al metodo leer archivo                       */
-                    /*-------------------------------------------------------------------------*/
-                    Leer_Excel(Ruta_Archivo);
+                    if (file.Name.ToUpper().Contains("coopeuch_base_avenimientos"))
+                    {
+                        String Ruta_Archivo = @"C:\coopeuch\avenimientos\" + file.Name ;
+                        Console.WriteLine("Lectura del Archivo: " + file.Name.ToString());
+                        /*-------------------------------------------------------------------------*/
+                        /*                    llamado al metodo leer archivo                       */
+                        /*-------------------------------------------------------------------------*/
+                        Leer_Excel(Ruta_Archivo);
+                    }
                 }
-            }
 
-            int cantidad = 0;
-            foreach (var i in Lista_Asignacion_Coopeuch_Avenimientos)
-            {
-                Console.WriteLine("Insertando Registro: " + cantidad.ToString());
-                /*-------------------------------------------------------------------------*/
-                /*                      CARGA A LA BASE DE DATOS                           */
-                /*-------------------------------------------------------------------------*/
-
-                string connstring = @"Data Source=192.168.0.77; Initial Catalog=EJFDES; Persist Security Info=True; User ID=sa; Password=Desa2019;";
-                using (SqlConnection con = new SqlConnection(connstring))
+                int cantidad = 0;
+                foreach (var i in Lista_Asignacion_Coopeuch_Avenimientos)
                 {
-                    con.Open();
-                    string commandString = @"INSERT INTO [dbo].[Coopeuch_Base_Avenimiento]
+                    Console.WriteLine("Insertando Registro: " + cantidad.ToString());
+                    /*-------------------------------------------------------------------------*/
+                    /*                      CARGA A LA BASE DE DATOS                           */
+                    /*-------------------------------------------------------------------------*/
+
+                    string connstring = @"Data Source=192.168.0.5; Initial Catalog=EJFDES; Persist Security Info=True; User ID=sa; Password=w2003ejf103;";
+                    //string connstring = @"Data Source=192.168.0.77; Initial Catalog=EJFDES; Persist Security Info=True; User ID=sa; Password=Desa2019;";
+                    using (SqlConnection con = new SqlConnection(connstring))
+                    {
+                        con.Open();
+                        string commandString = @"INSERT INTO [dbo].[Coopeuch_Base_Avenimiento]
                         ([Fecha_Carga],[Operación],[Oficina],[Rut socio2],[Nombre socio]
                         ,[Comuna Socio],[Grupo Credito],[Fecha Castigo]
                         ,[Acciones],[Saldo IBS (cierre mes anterior)],[TIPO RECUPERO]
@@ -60,38 +63,43 @@ namespace Carga_Asignacion_Coopeuch_Avenimiento
                         ,@CELULAR,@TELEFONO_PRIMARIO,@TELEFONO_SECUNDARIO,@DIRECCION_EMAIL
                         ,@TIPO_DEUDA,@INTERES_MORA,@TASA,NULL)";
 
-                    SqlCommand cmd = new SqlCommand(commandString, con);
-                    cmd.Parameters.AddWithValue("@FECHA_CARGA", i.FECHA_CARGA);
-                    cmd.Parameters.AddWithValue("@OPERACION", i.OPERACION);
-                    cmd.Parameters.AddWithValue("@OFICINA", i.OFICINA);
-                    cmd.Parameters.AddWithValue("@RUT_SOCIO2", i.RUT_SOCIO2);
-                    cmd.Parameters.AddWithValue("@NOMBRE_SOCIO", i.NOMBRE_SOCIO);
-                    cmd.Parameters.AddWithValue("@COMUNA_SOCIO", i.COMUNA_SOCIO);
-                    //cmd.Parameters.AddWithValue("@ANIO_CASTIGO", i.ANIO_CASTIGO);
-                    cmd.Parameters.AddWithValue("@GRUPO_CREDITO", i.GRUPO_CREDITO);
-                    cmd.Parameters.AddWithValue("@FECHA_CASTIGO", i.FECHA_CASTIGO);
-                    cmd.Parameters.AddWithValue("@ACCIONES", i.ACCIONES);
-                    cmd.Parameters.AddWithValue("@SALDO_IBS_CIERRE_MES_ANTERIOR", i.SALDO_IBS_CIERRE_MES_ANTERIOR);
-                    cmd.Parameters.AddWithValue("@TIPO_RECUPERO", i.TIPO_RECUPERO);
-                    cmd.Parameters.AddWithValue("@DIRECCION", i.DIRECCION);
-                    cmd.Parameters.AddWithValue("@COMPLEMENTO_DIRECCION", i.COMPLEMENTO_DIRECCION);
-                    cmd.Parameters.AddWithValue("@NOMBRE_COMUNA", i.NOMBRE_COMUNA);
-                    cmd.Parameters.AddWithValue("@CELULAR", i.CELULAR);
-                    cmd.Parameters.AddWithValue("@TELEFONO_PRIMARIO", i.TELEFONO_PRIMARIO);
-                    cmd.Parameters.AddWithValue("@TELEFONO_SECUNDARIO", i.TELEFONO_SECUNDARIO);
-                    cmd.Parameters.AddWithValue("@DIRECCION_EMAIL", i.DIRECCION_EMAIL);
-                    cmd.Parameters.AddWithValue("@TIPO_DEUDA", i.TIPO_DEUDA);
-                    cmd.Parameters.AddWithValue("@INTERES_MORA", i.INTERES_MORA);
-                    cmd.Parameters.AddWithValue("@TASA", i.TASA);
+                        SqlCommand cmd = new SqlCommand(commandString, con);
+                        cmd.Parameters.AddWithValue("@FECHA_CARGA", i.FECHA_CARGA);
+                        cmd.Parameters.AddWithValue("@OPERACION", i.OPERACION);
+                        cmd.Parameters.AddWithValue("@OFICINA", i.OFICINA);
+                        cmd.Parameters.AddWithValue("@RUT_SOCIO2", i.RUT_SOCIO2);
+                        cmd.Parameters.AddWithValue("@NOMBRE_SOCIO", i.NOMBRE_SOCIO);
+                        cmd.Parameters.AddWithValue("@COMUNA_SOCIO", i.COMUNA_SOCIO);
+                        //cmd.Parameters.AddWithValue("@ANIO_CASTIGO", i.ANIO_CASTIGO);
+                        cmd.Parameters.AddWithValue("@GRUPO_CREDITO", i.GRUPO_CREDITO);
+                        cmd.Parameters.AddWithValue("@FECHA_CASTIGO", i.FECHA_CASTIGO);
+                        cmd.Parameters.AddWithValue("@ACCIONES", i.ACCIONES);
+                        cmd.Parameters.AddWithValue("@SALDO_IBS_CIERRE_MES_ANTERIOR", i.SALDO_IBS_CIERRE_MES_ANTERIOR);
+                        cmd.Parameters.AddWithValue("@TIPO_RECUPERO", i.TIPO_RECUPERO);
+                        cmd.Parameters.AddWithValue("@DIRECCION", i.DIRECCION);
+                        cmd.Parameters.AddWithValue("@COMPLEMENTO_DIRECCION", i.COMPLEMENTO_DIRECCION);
+                        cmd.Parameters.AddWithValue("@NOMBRE_COMUNA", i.NOMBRE_COMUNA);
+                        cmd.Parameters.AddWithValue("@CELULAR", i.CELULAR);
+                        cmd.Parameters.AddWithValue("@TELEFONO_PRIMARIO", i.TELEFONO_PRIMARIO);
+                        cmd.Parameters.AddWithValue("@TELEFONO_SECUNDARIO", i.TELEFONO_SECUNDARIO);
+                        cmd.Parameters.AddWithValue("@DIRECCION_EMAIL", i.DIRECCION_EMAIL);
+                        cmd.Parameters.AddWithValue("@TIPO_DEUDA", i.TIPO_DEUDA);
+                        cmd.Parameters.AddWithValue("@INTERES_MORA", i.INTERES_MORA);
+                        cmd.Parameters.AddWithValue("@TASA", i.TASA);
 
-                    cmd.ExecuteNonQuery();
-                    con.Close();
-                    cantidad++;
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        cantidad++;
+                    }
                 }
+                //Console.ReadKey();
+                Lista_Asignacion_Coopeuch_Avenimientos = null;
+                GC.Collect();
             }
-            Console.ReadKey();
-            Lista_Asignacion_Coopeuch_Avenimientos = null;
-            GC.Collect();
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         private static void Leer_Excel(string ruta)
