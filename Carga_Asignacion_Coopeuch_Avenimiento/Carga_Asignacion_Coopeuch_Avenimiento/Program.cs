@@ -95,7 +95,7 @@ namespace Carga_Asignacion_Coopeuch_Avenimiento
                         cantidad++;
                     }
                 }
-                Console.ReadKey();
+                //Console.ReadKey();
                 Lista_Asignacion_Coopeuch_Avenimientos = null;
                 GC.Collect();
             //}
@@ -123,8 +123,8 @@ namespace Carga_Asignacion_Coopeuch_Avenimiento
                     using (var reader = ExcelReaderFactory.CreateReader(stream, new ExcelReaderConfiguration()
                     {
                         FallbackEncoding = Encoding.UTF8,
-                        LeaveOpen = false,
-                        AnalyzeInitialCsvRows = 0,
+                        //LeaveOpen = false,
+                        //AnalyzeInitialCsvRows = 0,
                     }))
                     {
                         do
@@ -136,7 +136,7 @@ namespace Carga_Asignacion_Coopeuch_Avenimiento
                                 if (contador > 1)
                                 {
                                     Asignacion_Coopeuch_Avenimiento Input = new Asignacion_Coopeuch_Avenimiento();
-
+                                    
                                     Campo = " FECHA_CARGA";
                                     Input.FECHA_CARGA = Fecha_Actual;
                                     Campo = " OPERACION";
@@ -150,7 +150,7 @@ namespace Carga_Asignacion_Coopeuch_Avenimiento
                                     Campo = " COMUNA_SOCIO";
                                     Input.COMUNA_SOCIO = reader.GetValue(15) != null ? reader.GetValue(15).ToString() : "";
                                     Campo = " ANIO_CASTIGO";
-                                    //Input.ANIO_CASTIGO = reader.GetValue(18) != null ? int.Parse(reader.GetValue(18).ToString()) : 0;
+                                    Input.ANIO_CASTIGO = 0; //reader.GetValue(18) != null ? int.Parse(reader.GetValue(18).ToString()) : 0;
                                     Campo = " GRUPO_CREDITO";
                                     Input.GRUPO_CREDITO = reader.GetValue(19) != null ? reader.GetValue(19).ToString() : "";
                                     Campo = " FECHA_CASTIGO";
@@ -158,7 +158,7 @@ namespace Carga_Asignacion_Coopeuch_Avenimiento
                                     Campo = " ACCIONES";
                                     Input.ACCIONES = reader.GetValue(24) != null ? reader.GetValue(24).ToString() : "";
                                     Campo = " SALDO_IBS_CIERRE_MES_ANTERIOR";
-                                    Input.SALDO_IBS_CIERRE_MES_ANTERIOR = reader.GetValue(29) != null ? int.Parse(reader.GetValue(29).ToString()) : 0;
+                                    Input.SALDO_IBS_CIERRE_MES_ANTERIOR = 0; //reader.GetValue(29) != null ? int.Parse(reader.GetValue(29).ToString()) : 0;
                                     Campo = " TIPO_RECUPERO";
                                     Input.TIPO_RECUPERO = reader.GetValue(37) != null ? reader.GetValue(37).ToString() : "";
                                     Campo = " DIRECCION";
@@ -189,6 +189,7 @@ namespace Carga_Asignacion_Coopeuch_Avenimiento
                         } while (reader.NextResult());
                     }
                 }
+
             }
             catch (Exception e)
             {
