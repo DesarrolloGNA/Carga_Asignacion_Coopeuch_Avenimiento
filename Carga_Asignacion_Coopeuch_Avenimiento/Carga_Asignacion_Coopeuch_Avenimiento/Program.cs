@@ -158,7 +158,7 @@ namespace Carga_Asignacion_Coopeuch_Avenimiento
                                     Campo = " ACCIONES";
                                     Input.ACCIONES = reader.GetValue(24) != null ? reader.GetValue(24).ToString() : "";
                                     Campo = " SALDO_IBS_CIERRE_MES_ANTERIOR";
-                                    Input.SALDO_IBS_CIERRE_MES_ANTERIOR = 0; //reader.GetValue(29) != null ? int.Parse(reader.GetValue(29).ToString()) : 0;
+                                    Input.SALDO_IBS_CIERRE_MES_ANTERIOR = reader.GetValue(29) != null ? int.Parse(reader.GetValue(29).ToString()) : 0;
                                     Campo = " TIPO_RECUPERO";
                                     Input.TIPO_RECUPERO = reader.GetValue(37) != null ? reader.GetValue(37).ToString() : "";
                                     Campo = " DIRECCION";
