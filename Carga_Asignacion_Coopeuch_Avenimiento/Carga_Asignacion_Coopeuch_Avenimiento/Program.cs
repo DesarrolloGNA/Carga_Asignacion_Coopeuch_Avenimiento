@@ -14,20 +14,23 @@ namespace Carga_Asignacion_Coopeuch_Avenimiento
         public static List<Asignacion_Coopeuch_Avenimiento> Lista_Asignacion_Coopeuch_Avenimientos = new List<Asignacion_Coopeuch_Avenimiento>();
         static void Main(string[] args)
         {
-            try
-            {
+            //try
+            //{
 
                 /*-------------------------------------------------------------------------*/
                 /*                             RUTA DEL ARCHIVO                            */
                 /*-------------------------------------------------------------------------*/
-                DirectoryInfo di = new DirectoryInfo(@"C:\coopeuch\avenimientos\");
-                FileInfo[] files = di.GetFiles("*");
+                DirectoryInfo di = new DirectoryInfo(@"C:\coopeuch\asignacion\");
+                FileInfo[] files = di.GetFiles("*.xlsx");
+
 
                 foreach (FileInfo file in files)
                 {
-                    if (file.Name.ToUpper().Contains("coopeuch_base_avenimientos"))
+                    Console.WriteLine("entra al foreach");
+                    if (file.Name.Contains("Base_Avenimientos"))
                     {
-                        String Ruta_Archivo = @"C:\coopeuch\avenimientos\" + file.Name ;
+                        Console.WriteLine("entra al if");
+                        String Ruta_Archivo = @"C:\coopeuch\asignacion\" + file.Name ;
                         Console.WriteLine("Lectura del Archivo: " + file.Name.ToString());
                         /*-------------------------------------------------------------------------*/
                         /*                    llamado al metodo leer archivo                       */
@@ -92,14 +95,16 @@ namespace Carga_Asignacion_Coopeuch_Avenimiento
                         cantidad++;
                     }
                 }
-                //Console.ReadKey();
+                Console.ReadKey();
                 Lista_Asignacion_Coopeuch_Avenimientos = null;
                 GC.Collect();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    string mensaje = e.Message.ToString();
+            //    Console.WriteLine(mensaje);
+            //    Console.ReadKey();
+            //}
         }
 
         private static void Leer_Excel(string ruta)
